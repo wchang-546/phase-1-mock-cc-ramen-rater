@@ -26,73 +26,52 @@ fetch("http://localhost:3000/ramens")
         })
 
         showRamenDetail(ramenInfo[0]);
-
         addRamenToBar();
-
         updateRatingComment();
         
     })
-    .catch(error => {console.log(error.message)})
+    .catch(error => {console.log(error.message)});
     
 
 function ramenInfoInBar(ramen){
-    let ramenImgLocation = document.querySelector("#ramen-menu")
-    let ramenImg = document.createElement("img")
-    ramenImg.src = ramen.image
-    ramenImg.alt = ramen.name
-    ramenImgLocation.appendChild(ramenImg)
+    const createRamenImg = document.createElement("img") 
+    document.getElementById("ramen-menu").appendChild(createRamenImg)
+    createRamenImg.src = ramen.image
+    createRamenImg.alt = ramen.name
 
-    ramenImg.addEventListener("click", () => {
-        showRamenDetail(ramen);
-    })
+    createRamenImg.addEventListener("click", () => {
+        showRamenDetail(ramen)
+    });
 };
 
 function showRamenDetail(ramen){
-    let ramenName = document.querySelector(".name");
-    let ramenImg = document.querySelector(".detail-image");
-    let ramenRestaurant = document.querySelector(".restaurant");
-    let ramenComment = document.getElementById("comment-display");
-    let ramenRating = document.getElementById("rating-display");
-
-    ramenName.textContent = ramen.name;
-    ramenImg.src = ramen.image;
-    ramenRestaurant.textContent = ramen.restaurant;
-    ramenComment.textContent = ramen.comment;
-    ramenRating.textContent = ramen.rating;
+    document.querySelector(".detail-image").src = ramen.image;
+    document.querySelector(".name").textContent = ramen.name;
+    document.querySelector(".restaurant").textContent = ramen.restaurant;
+    document.querySelector("#rating-display").textContent = ramen.rating;
+    document.querySelector("#comment-display").textContent = ramen.comment;
 };
 
-function addRamenToBar(){
-    const ramenForm = document.querySelector("#new-ramen")
 
-    ramenForm.addEventListener('submit', (e) => {
+function addRamenToBar(){
+    document.querySelector("#new-ramen").addEventListener('submit', (e) => {
         e.preventDefault();
         
-        let ramenInfoLocation = document.querySelector('#ramen-menu');
-        let newRamenImg = document.createElement("img")
+        const createRamenImg = document.createElement("img") 
+        createRamenImg.src = e.target["image"].value
+        createRamenImg.alt = e.target["name"].value
 
-        const addRamenImg = e.target["image"].value
-
-        newRamenImg.alt = e.target["name"].value
-        newRamenImg.src = addRamenImg;
-        ramenInfoLocation.appendChild(newRamenImg)
+        document.getElementById("ramen-menu").appendChild(createRamenImg)
 
         e.target.reset();
-    })    
+    });    
 };
 
 function updateRatingComment(){
-    const updateForm = document.querySelector("#edit-ramen")
-    updateForm.addEventListener('submit', (e) => {
-        e.preventDefault(); 
-        
-        let ramenRatingUpdateLocation = document.querySelector("#rating-display")
-        let ramenCommentUpdateLocation = document.querySelector("#comment-display")
-
-        const updateRamenRating = e.target["rating"].value
-        const updateRamenComment = e.target["new-comment"].value
-
-        ramenRatingUpdateLocation.textContent = updateRamenRating
-        ramenCommentUpdateLocation.textContent = updateRamenComment
-    })
-}
+    document.getElementById("edit-ramen").addEventListener('submit', (e) => {
+        e.preventDefault();
+        document.getElementById("rating-display").textContent = e.target["rating"].value
+        document.getElementById("comment-display").textContent = e.target["new-comment"].value
+    });
+};
 
