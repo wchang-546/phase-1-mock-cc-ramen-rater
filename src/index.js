@@ -16,13 +16,11 @@
  */
 
 
-let ramenInfo;
-let currentRamen;
 
 fetch("http://localhost:3000/ramens")
     .then(response => response.json())
     .then(json => {
-        ramenInfo = json; 
+        let ramenInfo = json; 
         ramenInfo.forEach(ramen => {
             ramenInfoInBar(ramen);
         })
@@ -50,8 +48,6 @@ function ramenInfoInBar(ramen){
 };
 
 function showRamenDetail(ramen){
-    currentRamen = ramen;
-    
     let ramenName = document.querySelector(".name");
     let ramenImg = document.querySelector(".detail-image");
     let ramenRestaurant = document.querySelector(".restaurant");
